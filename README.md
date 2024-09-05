@@ -25,30 +25,20 @@ Then, run:
 flutter pub get
 ```
 ## Usage
-### Example 1: Evaluate a Complex Boolean Expression
 
+### Example 1: Evaluate a Mathematical Expression
 ```dart
-import 'package:condition_equation/condition_equation.dart';
-
-void main() {
-  bool value = ConditionEquation().evaluateExpression(
-    "((0.00==1)||(180.00>=180)&&(180.00<=400)&&(1.00<=300)||(1.00>=110)&&(1.00<=300)&&(180.00<=400))"
-  );
-  print(value); // true
-}
-```
-### Example 2: Evaluate a Mathematical Expression
-```dart
-import 'package:condition_equation/condition_equation.dart';
+import 'package:string_equation/string_equation.dart';
 
 void main() {
   double value = ConditionEquation().evaluateExpression("(2+3)");
   print(value); // 5.0
 }
 ```
-### Example 3: Evaluate an Expression with Variables
+
+### Example 2: Evaluate an Expression with Variables
 ```dart
-import 'package:condition_equation/condition_equation.dart';
+import 'package:string_equation/string_equation.dart';
 
 void main() {
   bool value = ConditionEquation({'a': 2, 'b': 3}).evaluateExpression("(a < b)");
@@ -56,13 +46,25 @@ void main() {
 }
 ```
 
-### Example 4: Evaluate a Mathematical Expression with Variables
+### Example 3: Evaluate a Mathematical Expression with Variables
 ```dart
-import 'package:condition_equation/condition_equation.dart';
+import 'package:string_equation/string_equation.dart';
 
 void main() {
   double value = ConditionEquation({'a': 2, 'b': 3}).evaluateExpression("(a + b)");
   print(value); // 5.0
+}
+```
+
+### Example 4: Evaluate a Complex Logical Expression
+```dart
+import 'package:string_equation/string_equation.dart';
+
+void main() {
+  bool value = ConditionEquation().evaluateExpression(
+    "((0.00==1)||(180.00>=180)&&(180.00<=400)&&(1.00<=300)||(1.00>=110)&&(1.00<=300)&&(180.00<=400))"
+  );
+  print(value); // true
 }
 ```
 ## Contributing
