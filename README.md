@@ -58,7 +58,6 @@ void main() {
 
 ### Example 4: Evaluate a Mathematical Expression with Variables
 ```dart
-Copy code
 import 'package:condition_equation/condition_equation.dart';
 
 void main() {
