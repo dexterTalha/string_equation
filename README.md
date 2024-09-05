@@ -1,7 +1,8 @@
 # ConditionEquation
 
 ## Description
-ConditionEquation is a Dart package that allows you to evaluate logical and mathematical expressions dynamically, with support for variables. The package is useful in scenarios where you need to interpret and evaluate expressions from a string format.
+
+ConditionEquation is a powerful Dart package that allows you to dynamically evaluate both logical and mathematical expressions from a string format. It offers robust support for variables, making it highly useful in scenarios where you need to parse, interpret, and compute expressions programmatically. Whether you're working on rule engines, dynamic forms, or data validation, ConditionEquation simplifies the process of handling complex expressions in your Dart applications.
 
 ## Features
 
