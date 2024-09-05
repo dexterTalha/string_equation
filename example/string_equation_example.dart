@@ -1,7 +1,10 @@
 import 'package:string_equation/string_equation.dart';
 
 void main() {
-  bool value =
-      ConditionEquation().evaluateExpression("((0.00==1)||((180.00>=180)&&(180.00<=400)&&(1.00<=300))||((1.00>=110)&&(1.00<=300)&&(180.00<=400)))");
+  var value = ConditionEquation().evaluateExpression("(2+3)");
+  var value2 = ConditionEquation().evaluateExpression("(2<3)");
+  var value3 = ConditionEquation().evaluateExpression("(2<3) && (4>5) || (4==4) && (3<2)");
   print(value);
+  print(value2);
+  print(value3);
 }
