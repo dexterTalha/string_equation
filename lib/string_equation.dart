@@ -1,10 +1,8 @@
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
+/// Library for exporting condition equation and math utilities.
 library;
 
-// export 'src/string_equation_base.dart';
+/// Exports the ConditionEquation class and related utilities.
 export 'src/condition_equation.dart';
-export 'src/math_utils.dart';
 
-// TODO: Export any libraries intended for clients of this package.
+/// Exports the MathUtils class and related utilities.
+export 'src/math_utils.dart';

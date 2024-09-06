@@ -1,10 +1,10 @@
 name: string_equation
-description: ConditionEquation is a powerful Dart package that allows you to dynamically evaluate both logical and mathematical expressions from a string format.
-version: 1.0.1
+description: ConditionEquation is a powerful Dart package that allows you to dynamically evaluate both logical and mathematical expressions from a string format.q
+version: 1.0.2
 repository: https://github.com/dexterTalha/string_equation.git
 
 environment:
-  sdk: ^3.5.0
+  sdk: ">=3.0.0 <4.0.0"
 
 # Add regular dependencies here.
 dependencies:
