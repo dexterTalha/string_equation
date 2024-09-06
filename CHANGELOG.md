@@ -14,3 +14,7 @@
 - Documentation updates
 - Formatting updates
 - Updated dart version support
+
+## 1.0.3
+
+- Static analysis pass
