@@ -4,23 +4,25 @@ import 'package:test/test.dart';
 void main() {
   group('A group of tests', () {
     test("Solve Expression0", () async {
-      bool value = ConditionEquation()
-          .evaluateExpression("((0.00==1)||((180.00>=180)&&(180.00<=400)&&(1.00<=300))||((1.00>=110)&&(1.00<=300)&&(180.00<=400)))");
+      bool value = ConditionEquation().evaluateExpression(
+          "((0.00==1)||((180.00>=180)&&(180.00<=400)&&(1.00<=300))||((1.00>=110)&&(1.00<=300)&&(180.00<=400)))");
       expect(true, value);
     });
     test("Solve Expression1", () async {
-      bool value =
-          ConditionEquation().solveExpression("((0.00==1)||(180.00>=180)&&(180.00<=400)&&(1.00<=300)||(1.00>=110)&&(1.00<=300)&&(180.00<=400))");
+      bool value = ConditionEquation().solveExpression(
+          "((0.00==1)||(180.00>=180)&&(180.00<=400)&&(1.00<=300)||(1.00>=110)&&(1.00<=300)&&(180.00<=400))");
       expect(true, value);
     });
 
     test("Solve Expression2", () async {
-      bool value = ConditionEquation().solveExpression("(((9>7) && (6>7)) && (3>1))");
+      bool value =
+          ConditionEquation().solveExpression("(((9>7) && (6>7)) && (3>1))");
       expect(false, value);
     });
 
     test("Solve Expression3", () async {
-      bool value = ConditionEquation().solveExpression("((5==5) && (12 <= 10) || (14>= 9))");
+      bool value = ConditionEquation()
+          .solveExpression("((5==5) && (12 <= 10) || (14>= 9))");
       expect(true, value);
     });
 
@@ -29,15 +31,18 @@ void main() {
       expect(false, value);
     });
     test("Solve Expression5", () async {
-      bool value = ConditionEquation().solveExpression("((3>= 4) || (7>=6) || (12 == 10))");
+      bool value = ConditionEquation()
+          .solveExpression("((3>= 4) || (7>=6) || (12 == 10))");
       expect(true, value);
     });
     test("Solve Expression6", () async {
-      bool value = ConditionEquation().solveExpression("((9 < 7) || (12 < 13) || (7==8 ))");
+      bool value = ConditionEquation()
+          .solveExpression("((9 < 7) || (12 < 13) || (7==8 ))");
       expect(true, value);
     });
     test("Solve Expression7 ", () async {
-      bool value = ConditionEquation().solveExpression("((1>2) || (3>5) || (7 == 8))");
+      bool value =
+          ConditionEquation().solveExpression("((1>2) || (3>5) || (7 == 8))");
       expect(false, value);
     });
     test("Solve Expression8", () async {
@@ -60,7 +65,8 @@ void main() {
     //   expect(true, value);
     // });
     test("Solve Expression11", () async {
-      bool value = ConditionEquation().solveExpression("(9>7) && (6>7) || (3>1) ");
+      bool value =
+          ConditionEquation().solveExpression("(9>7) && (6>7) || (3>1) ");
       expect(true, value);
     });
     test("Solve Expression12", () async {
@@ -68,15 +74,18 @@ void main() {
       expect(true, value);
     });
     test("Solve Expression13", () async {
-      bool value = ConditionEquation().solveExpression("((9>7) && (6>7) || (3>3))");
+      bool value =
+          ConditionEquation().solveExpression("((9>7) && (6>7) || (3>3))");
       expect(false, value);
     });
     test("Solve Expression14", () async {
-      bool value = ConditionEquation().solveExpression("( (9>7) && ((6>7)&&(3>3)))");
+      bool value =
+          ConditionEquation().solveExpression("( (9>7) && ((6>7)&&(3>3)))");
       expect(false, value);
     });
     test("Solve Expression15", () async {
-      bool value = ConditionEquation().solveExpression("( (9>7) && ((8>7)&&(3>=3)))");
+      bool value =
+          ConditionEquation().solveExpression("( (9>7) && ((8>7)&&(3>=3)))");
       expect(true, value);
     });
     test("Solve Expression16", () async {
@@ -90,7 +99,8 @@ void main() {
     //   expect(true, value);
     // });
     test("Solve Expression18", () async {
-      bool value = ConditionEquation().solveExpression("(((3+4)>7)&&(1==1 && 1<0 || 2>1))");
+      bool value = ConditionEquation()
+          .solveExpression("(((3+4)>7)&&(1==1 && 1<0 || 2>1))");
       expect(false, value);
     });
 
@@ -104,23 +114,28 @@ void main() {
     });
 
     test("MATH Addition", () async {
-      var value = MathUtils().putValueAndSolveExpression("a+b", {"a": 1, "b": 2});
+      var value =
+          MathUtils().putValueAndSolveExpression("a+b", {"a": 1, "b": 2});
       expect(value, 3.0);
     });
     test("MATH Multiply", () async {
-      var value = MathUtils().putValueAndSolveExpression("a*b", {"a": 2, "b": 2});
+      var value =
+          MathUtils().putValueAndSolveExpression("a*b", {"a": 2, "b": 2});
       expect(value, 4.0);
     });
     test("MATH Subtract", () async {
-      var value = MathUtils().putValueAndSolveExpression("a-b", {"a": 1, "b": 2});
+      var value =
+          MathUtils().putValueAndSolveExpression("a-b", {"a": 1, "b": 2});
       expect(value, -1.0);
     });
     test("MATH divide", () async {
-      var value = MathUtils().putValueAndSolveExpression("a/b", {"a": 1, "b": 2});
+      var value =
+          MathUtils().putValueAndSolveExpression("a/b", {"a": 1, "b": 2});
       expect(value, 0.5);
     });
     test("MATH power", () async {
-      var value = MathUtils().putValueAndSolveExpression("a^b", {"a": 3, "b": 2});
+      var value =
+          MathUtils().putValueAndSolveExpression("a^b", {"a": 3, "b": 2});
       expect(value, 9);
     });
 
@@ -138,12 +153,15 @@ void main() {
 
     test("SINGLE SELECT LOOPING ADD BUTTON", () {
       var map = {"order11": ''};
-      bool result = ConditionEquation(answerMap: map).evaluateExpression("(order11==@^(1)\$@)");
+      bool result = ConditionEquation(answerMap: map)
+          .evaluateExpression("(order11==@^(1)\$@)");
       expect(false, result);
     });
 
     test("Check regular Expression", () async {
-      var value = ConditionEquation(answerMap: {'order4': "2"}).evaluateExpression("(order4==@^((?:[1-9]|1[0-8]))\$@)||(order5==@^([1])\$@)");
+      var value = ConditionEquation(answerMap: {'order4': "2"})
+          .evaluateExpression(
+              "(order4==@^((?:[1-9]|1[0-8]))\$@)||(order5==@^([1])\$@)");
       expect(true, value);
     });
     test("Check regular Expression Complex 1", () async {

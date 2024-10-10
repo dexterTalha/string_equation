@@ -95,7 +95,10 @@ class ConditionEquation {
     } else {
       final newPattern = pattern.trim().substring(1, pattern.length - 1);
       final split = newPattern.split(",");
-      if (split.length == 3 && split[0].isNotEmpty && split[1].isNotEmpty && split[2].isNotEmpty) {
+      if (split.length == 3 &&
+          split[0].isNotEmpty &&
+          split[1].isNotEmpty &&
+          split[2].isNotEmpty) {
         return DateEquationResult(split[0], split[1], split[2]);
       } else {
         throw Exception("Invalid exp");
@@ -152,9 +155,17 @@ class ConditionEquation {
   /// \param expression The expression to be evaluated.
   /// \return The result of the evaluated expression.
   dynamic evaluateExpression(String expression) {
-    var logicalOperators = [GREATER_THAN, EQUAL_TO, LESS_THAN, NOT, ORIGINAL_SINGLE_OR, ORIGINAL_SINGLE_AND];
+    var logicalOperators = [
+      GREATER_THAN,
+      EQUAL_TO,
+      LESS_THAN,
+      NOT,
+      ORIGINAL_SINGLE_OR,
+      ORIGINAL_SINGLE_AND
+    ];
     if (!logicalOperators.any((e) => expression.contains(e))) {
-      return MathUtils().putValueAndSolveExpression(expression, answerMap, parentId: parentId);
+      return MathUtils().putValueAndSolveExpression(expression, answerMap,
+          parentId: parentId);
     }
     Map exp = {};
     String replacement = "";
@@ -170,7 +181,8 @@ class ConditionEquation {
           String key = random.nextIntOfDigits(5).toString();
           exp[key] = replacement;
 
-          newExpression = newExpression.replaceFirst("@$replacement@", "@$key@");
+          newExpression =
+              newExpression.replaceFirst("@$replacement@", "@$key@");
 
           insideAtBlock = false;
           replacement = "";
@@ -181,8 +193,11 @@ class ConditionEquation {
         replacement += st;
       }
     }
-    String eq = newExpression.removeSurrounding(START.toString(), END.toString());
-    isGlobalHavingNot = eq.startsWith(NOT) && eq.startsWith(DOUBLE_START, 1) && eq.endsWith(DOUBLE_END);
+    String eq =
+        newExpression.removeSurrounding(START.toString(), END.toString());
+    isGlobalHavingNot = eq.startsWith(NOT) &&
+        eq.startsWith(DOUBLE_START, 1) &&
+        eq.endsWith(DOUBLE_END);
     if (isGlobalHavingNot) {
       newExpression = eq.replaceAll(NOT, "");
     }
@@ -211,8 +226,11 @@ class ConditionEquation {
       throw Exception("Invalid exp");
     }
 
-    if (splitEquation(equations)['equations'].length == 1 && equations.startsWith(DOUBLE_START) && equations.endsWith(DOUBLE_END)) {
-      equations = equations.trim().removeSurrounding(START.toString(), END.toString());
+    if (splitEquation(equations)['equations'].length == 1 &&
+        equations.startsWith(DOUBLE_START) &&
+        equations.endsWith(DOUBLE_END)) {
+      equations =
+          equations.trim().removeSurrounding(START.toString(), END.toString());
     }
 
     if (equations.contains(AND) || equations.contains(OR)) {
@@ -228,9 +246,11 @@ class ConditionEquation {
 
         if (eq1.isValidEquation && eq2.isValidEquation) {
           if (hashMap[mutableEntryKey] == OR) {
-            return solveExpression(eq1, map: map) || solveExpression(eq2, map: map);
+            return solveExpression(eq1, map: map) ||
+                solveExpression(eq2, map: map);
           } else if (hashMap[mutableEntryKey] == AND) {
-            return solveExpression(eq1, map: map) && solveExpression(eq2, map: map);
+            return solveExpression(eq1, map: map) &&
+                solveExpression(eq2, map: map);
           }
           break;
         }
@@ -255,19 +275,24 @@ class ConditionEquation {
     String newCondition = conditions;
 
     if (newCondition.startsWith(START) && newCondition.endsWith(END)) {
-      newCondition = conditions.trim().removeSurrounding(START.toString(), END.toString());
+      newCondition =
+          conditions.trim().removeSurrounding(START.toString(), END.toString());
       return checkExpression(newCondition, map: map);
     }
     isHavingNot = newCondition.startsWith(NOT);
     if (isHavingNot) {
       newCondition = newCondition.substring(1, conditions.length);
-      newCondition = newCondition.trim().removeSurrounding(START.toString(), END.toString());
+      newCondition = newCondition
+          .trim()
+          .removeSurrounding(START.toString(), END.toString());
     }
 
     if (newCondition.contains(GREATER_THAN_EQUAL_TO)) {
       List<dynamic> split = newCondition.split(GREATER_THAN_EQUAL_TO);
       try {
-        split = GREATER_THAN_EQUAL_TO.getValues(newCondition, answerMap, parentId: parentId) ?? [];
+        split = GREATER_THAN_EQUAL_TO.getValues(newCondition, answerMap,
+                parentId: parentId) ??
+            [];
       } catch (e) {
         List<dynamic> s = [];
         dynamic val = [];
@@ -290,7 +315,9 @@ class ConditionEquation {
     } else if (newCondition.contains(LESS_THAN_EQUAL_TO)) {
       List<dynamic> split = newCondition.split(LESS_THAN_EQUAL_TO);
       try {
-        split = LESS_THAN_EQUAL_TO.getValues(newCondition, answerMap, parentId: parentId) ?? [];
+        split = LESS_THAN_EQUAL_TO.getValues(newCondition, answerMap,
+                parentId: parentId) ??
+            [];
       } catch (e) {
         List<dynamic> s = [];
         dynamic val = [];
@@ -311,7 +338,8 @@ class ConditionEquation {
       // return split[0]! <= split[1]!;
       return isHavingNot ? !(split[0]! <= split[1]!) : split[0]! <= split[1]!;
     } else if (newCondition.contains(NOT_EQUAL_TO)) {
-      var split = NOT_EQUAL_TO.getValues(newCondition, answerMap, parentId: parentId);
+      var split =
+          NOT_EQUAL_TO.getValues(newCondition, answerMap, parentId: parentId);
       if (split != null) {
         // return split[0] != split[1];
         return isHavingNot ? !(split[0] != split[1]) : split[0] != split[1];
@@ -322,12 +350,15 @@ class ConditionEquation {
       var split = NOT.getValues(newCondition, answerMap, parentId: parentId);
       if (split != null) {
         // return !(split[0] == split[1]);
-        return isHavingNot ? !(!(split[0] == split[1])) : !(split[0] == split[1]);
+        return isHavingNot
+            ? !(!(split[0] == split[1]))
+            : !(split[0] == split[1]);
       } else {
         throw Exception("Invalid value $newCondition");
       }
     } else if (newCondition.contains(GREATER_THAN)) {
-      var split = GREATER_THAN.getValues(newCondition, answerMap, parentId: parentId);
+      var split =
+          GREATER_THAN.getValues(newCondition, answerMap, parentId: parentId);
 
       if (split != null) {
         // return split[0]! > split[1]!;
@@ -336,7 +367,8 @@ class ConditionEquation {
         throw Exception("Invalid value $newCondition");
       }
     } else if (newCondition.contains(LESS_THAN)) {
-      var split = LESS_THAN.getValues(newCondition, answerMap, parentId: parentId);
+      var split =
+          LESS_THAN.getValues(newCondition, answerMap, parentId: parentId);
       if (split != null) {
         return isHavingNot ? !(split[0]! < split[1]!) : split[0]! < split[1]!;
       } else {
@@ -357,7 +389,9 @@ class ConditionEquation {
           if (answerMap == null) {
             matchValue = split[0];
           } else {
-            bool isList = answerMap![split[0]] == null ? false : answerMap![split[0]] is List;
+            bool isList = answerMap![split[0]] == null
+                ? false
+                : answerMap![split[0]] is List;
             if (!isList) {
               String? val = answerMap?[split[0]]?.toString();
               if (val == null) return false;
@@ -365,7 +399,8 @@ class ConditionEquation {
             } else {
               List<dynamic> val = answerMap?[split[0]];
               if (val.isEmpty) return false;
-              return val.any((element) => regExp.hasMatch(element?.toString() ?? ""));
+              return val
+                  .any((element) => regExp.hasMatch(element?.toString() ?? ""));
             }
           }
           return regExp.hasMatch(matchValue);
@@ -377,7 +412,9 @@ class ConditionEquation {
       List<dynamic> split = newCondition.split(EQUAL_TO);
       try {
         double.parse(split[0]);
-        split = EQUAL_TO.getValues(newCondition, answerMap, parentId: parentId) ?? [];
+        split =
+            EQUAL_TO.getValues(newCondition, answerMap, parentId: parentId) ??
+                [];
       } catch (e) {
         List<dynamic> s = [];
         dynamic val = [];
@@ -456,10 +493,13 @@ extension GetValue on String {
   /// \param answer A map containing answers for variables in the conditions.
   /// \param parentId An optional parent ID for context.
   /// \return A list of evaluated double values or null if the evaluation fails.
-  List<double?>? getValues(String conditions, Map<String, dynamic>? answer, {String? parentId}) {
+  List<double?>? getValues(String conditions, Map<String, dynamic>? answer,
+      {String? parentId}) {
     var map = conditions
         .split(this)
-        .map((e) => MathUtils().putValueAndSolveExpression(e, answer, parentId: parentId).toString())
+        .map((e) => MathUtils()
+            .putValueAndSolveExpression(e, answer, parentId: parentId)
+            .toString())
         .map((e) => double.parse(e));
     if (map.length == 2 && !map.contains(null)) {
       return map.toList();
@@ -488,7 +528,11 @@ extension CheckValidRegex on String {
       contains("\\") ||
       (contains("]") && contains("[")) ||
       (contains("(") && contains(")")) ||
-      ((contains("{") && contains("}")) || contains("?") || contains("+") || contains("|") || contains("&"));
+      ((contains("{") && contains("}")) ||
+          contains("?") ||
+          contains("+") ||
+          contains("|") ||
+          contains("&"));
 }
 
 /// Extension on String to check if a string is a valid equation.
@@ -496,7 +540,9 @@ extension StringEquation on String {
   /// Checks if the string has balanced parentheses.
   ///
   /// \return True if the string has balanced parentheses, false otherwise.
-  bool get isValidEquation => ConditionEquation.START.allMatches(this).length == ConditionEquation.END.allMatches(this).length;
+  bool get isValidEquation =>
+      ConditionEquation.START.allMatches(this).length ==
+      ConditionEquation.END.allMatches(this).length;
 }
 
 /// Extension on String to provide casing utility methods.
@@ -504,12 +550,16 @@ extension StringCasingExtension on String {
   /// Converts the string to capitalized form.
   ///
   /// \return The string with the first letter capitalized and the rest in lowercase.
-  String toCapitalized() => length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
+  String toCapitalized() =>
+      length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
 
   /// Converts the string to title case.
   ///
   /// \return The string with each word capitalized.
-  String toTitleCase() => replaceAll(RegExp(' +'), ' ').split(' ').map((str) => str.toCapitalized()).join(' ');
+  String toTitleCase() => replaceAll(RegExp(' +'), ' ')
+      .split(' ')
+      .map((str) => str.toCapitalized())
+      .join(' ');
 }
 
 /// Extension on String to remove surrounding characters.
@@ -520,7 +570,9 @@ extension RemoveSurrounding on String {
   /// \param suffix The suffix to be removed.
   /// \return The string without the specified prefix and suffix.
   String removeSurrounding(String prefix, String suffix) {
-    if ((length >= prefix.length + suffix.length) && startsWith(prefix) && endsWith(suffix)) {
+    if ((length >= prefix.length + suffix.length) &&
+        startsWith(prefix) &&
+        endsWith(suffix)) {
       return substring(prefix.length, length - suffix.length);
     }
     return this;
@@ -548,7 +600,8 @@ extension RandomOfDigits on Random {
   /// \return A random integer with the specified number of digits.
   int nextIntOfDigits(int digitCount) {
     assert(1 <= digitCount && digitCount <= 9);
-    int min = digitCount == 1 ? 0 : int.parse(pow(10, digitCount - 1).toString());
+    int min =
+        digitCount == 1 ? 0 : int.parse(pow(10, digitCount - 1).toString());
     int max = int.parse(pow(10, digitCount).toString());
     return min + nextInt(max - min);
   }
