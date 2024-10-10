@@ -4,25 +4,23 @@ import 'package:test/test.dart';
 void main() {
   group('A group of tests', () {
     test("Solve Expression0", () async {
-      bool value = ConditionEquation().evaluateExpression(
-          "((0.00==1)||((180.00>=180)&&(180.00<=400)&&(1.00<=300))||((1.00>=110)&&(1.00<=300)&&(180.00<=400)))");
+      bool value = ConditionEquation()
+          .evaluateExpression("((0.00==1)||((180.00>=180)&&(180.00<=400)&&(1.00<=300))||((1.00>=110)&&(1.00<=300)&&(180.00<=400)))");
       expect(true, value);
     });
     test("Solve Expression1", () async {
-      bool value = ConditionEquation().solveExpression(
-          "((0.00==1)||(180.00>=180)&&(180.00<=400)&&(1.00<=300)||(1.00>=110)&&(1.00<=300)&&(180.00<=400))");
+      bool value =
+          ConditionEquation().solveExpression("((0.00==1)||(180.00>=180)&&(180.00<=400)&&(1.00<=300)||(1.00>=110)&&(1.00<=300)&&(180.00<=400))");
       expect(true, value);
     });
 
     test("Solve Expression2", () async {
-      bool value =
-          ConditionEquation().solveExpression("(((9>7) && (6>7)) && (3>1))");
+      bool value = ConditionEquation().solveExpression("(((9>7) && (6>7)) && (3>1))");
       expect(false, value);
     });
 
     test("Solve Expression3", () async {
-      bool value = ConditionEquation()
-          .solveExpression("((5==5) && (12 <= 10) || (14>= 9))");
+      bool value = ConditionEquation().solveExpression("((5==5) && (12 <= 10) || (14>= 9))");
       expect(true, value);
     });
 
@@ -31,18 +29,15 @@ void main() {
       expect(false, value);
     });
     test("Solve Expression5", () async {
-      bool value = ConditionEquation()
-          .solveExpression("((3>= 4) || (7>=6) || (12 == 10))");
+      bool value = ConditionEquation().solveExpression("((3>= 4) || (7>=6) || (12 == 10))");
       expect(true, value);
     });
     test("Solve Expression6", () async {
-      bool value = ConditionEquation()
-          .solveExpression("((9 < 7) || (12 < 13) || (7==8 ))");
+      bool value = ConditionEquation().solveExpression("((9 < 7) || (12 < 13) || (7==8 ))");
       expect(true, value);
     });
     test("Solve Expression7 ", () async {
-      bool value =
-          ConditionEquation().solveExpression("((1>2) || (3>5) || (7 == 8))");
+      bool value = ConditionEquation().solveExpression("((1>2) || (3>5) || (7 == 8))");
       expect(false, value);
     });
     test("Solve Expression8", () async {
@@ -65,8 +60,7 @@ void main() {
     //   expect(true, value);
     // });
     test("Solve Expression11", () async {
-      bool value =
-          ConditionEquation().solveExpression("(9>7) && (6>7) || (3>1) ");
+      bool value = ConditionEquation().solveExpression("(9>7) && (6>7) || (3>1) ");
       expect(true, value);
     });
     test("Solve Expression12", () async {
@@ -74,18 +68,15 @@ void main() {
       expect(true, value);
     });
     test("Solve Expression13", () async {
-      bool value =
-          ConditionEquation().solveExpression("((9>7) && (6>7) || (3>3))");
+      bool value = ConditionEquation().solveExpression("((9>7) && (6>7) || (3>3))");
       expect(false, value);
     });
     test("Solve Expression14", () async {
-      bool value =
-          ConditionEquation().solveExpression("( (9>7) && ((6>7)&&(3>3)))");
+      bool value = ConditionEquation().solveExpression("( (9>7) && ((6>7)&&(3>3)))");
       expect(false, value);
     });
     test("Solve Expression15", () async {
-      bool value =
-          ConditionEquation().solveExpression("( (9>7) && ((8>7)&&(3>=3)))");
+      bool value = ConditionEquation().solveExpression("( (9>7) && ((8>7)&&(3>=3)))");
       expect(true, value);
     });
     test("Solve Expression16", () async {
@@ -99,8 +90,7 @@ void main() {
     //   expect(true, value);
     // });
     test("Solve Expression18", () async {
-      bool value = ConditionEquation()
-          .solveExpression("(((3+4)>7)&&(1==1 && 1<0 || 2>1))");
+      bool value = ConditionEquation().solveExpression("(((3+4)>7)&&(1==1 && 1<0 || 2>1))");
       expect(false, value);
     });
 
@@ -114,28 +104,23 @@ void main() {
     });
 
     test("MATH Addition", () async {
-      var value =
-          MathUtils().putValueAndSolveExpression("a+b", {"a": 1, "b": 2});
+      var value = MathUtils().putValueAndSolveExpression("a+b", {"a": 1, "b": 2});
       expect(value, 3.0);
     });
     test("MATH Multiply", () async {
-      var value =
-          MathUtils().putValueAndSolveExpression("a*b", {"a": 2, "b": 2});
+      var value = MathUtils().putValueAndSolveExpression("a*b", {"a": 2, "b": 2});
       expect(value, 4.0);
     });
     test("MATH Subtract", () async {
-      var value =
-          MathUtils().putValueAndSolveExpression("a-b", {"a": 1, "b": 2});
+      var value = MathUtils().putValueAndSolveExpression("a-b", {"a": 1, "b": 2});
       expect(value, -1.0);
     });
     test("MATH divide", () async {
-      var value =
-          MathUtils().putValueAndSolveExpression("a/b", {"a": 1, "b": 2});
+      var value = MathUtils().putValueAndSolveExpression("a/b", {"a": 1, "b": 2});
       expect(value, 0.5);
     });
     test("MATH power", () async {
-      var value =
-          MathUtils().putValueAndSolveExpression("a^b", {"a": 3, "b": 2});
+      var value = MathUtils().putValueAndSolveExpression("a^b", {"a": 3, "b": 2});
       expect(value, 9);
     });
 
@@ -153,16 +138,40 @@ void main() {
 
     test("SINGLE SELECT LOOPING ADD BUTTON", () {
       var map = {"order11": ''};
-      bool result = ConditionEquation(answerMap: map)
-          .evaluateExpression("(order11==@^(1)\$@)");
-      print(result);
+      bool result = ConditionEquation(answerMap: map).evaluateExpression("(order11==@^(1)\$@)");
       expect(false, result);
     });
 
     test("Check regular Expression", () async {
-      var value = ConditionEquation(answerMap: {'order4': "2"})
-          .evaluateExpression(
-              "(order4==@^((?:[1-9]|1[0-8]))\$@)||(order5==@^([1])\$@)");
+      var value = ConditionEquation(answerMap: {'order4': "2"}).evaluateExpression("(order4==@^((?:[1-9]|1[0-8]))\$@)||(order5==@^([1])\$@)");
+      expect(true, value);
+    });
+    test("Check regular Expression Complex 1", () async {
+      var value = ConditionEquation(answerMap: {
+        "order10": "2",
+        "order11": "5",
+        "order12": "1",
+        "order13": "10000",
+        "order14": "1",
+        "order15": "4",
+        "order16": "2",
+        "sa_bd_age": 41,
+      }).evaluateExpression(
+          "(sa_bd_age==@^(1[89]\$|^[2-6][0-9]\$|^70)\$@)&&(order10==@^(?:1|2|3)\$@)&&(order12==@^(?:1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52)\$@)&&(order13==@.*@)&&(order14==@^(?:1|2|3|4)\$@)&&(order15==@^(?:1|2|3|4)\$@)");
+      expect(true, value);
+    });
+    test("Check regular Expression Complex ", () async {
+      var value = ConditionEquation(answerMap: {
+        "order10": "2",
+        "order11": "5",
+        "order12": "1",
+        "order13": "10000",
+        "order14": "1",
+        "order15": "4",
+        "order16": "2",
+        "sa_bd_age": 41,
+      }).evaluateExpression(
+          "(sa_bd_age==@^(1[89]\$|^[2-4][0-9]\$|^50)\$@)&&(order10==@^(?:1|2|3)\$@)&&(order12==@^(?:1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52)\$@)&&(order13==@.*@)&&(order14==@^(?:1|2|3|4)\$@)&&(order15==@^(?:1|2|3|4)\$@)");
       expect(true, value);
     });
   });
