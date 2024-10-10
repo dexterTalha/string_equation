@@ -168,28 +168,29 @@ class ConditionEquation {
           parentId: parentId);
     }
     Map exp = {};
-    int specialCounter = 0;
     String replacement = "";
     Random random = Random();
     String newExpression = expression;
     String subChar = "@";
-    for (String st in expression.split("")) {
-      if (specialCounter > 1) {
-        String key = "${random.nextIntOfDigits(5)}";
+    bool insideAtBlock = false;
+    for (int i = 0; i < expression.length; i++) {
+      String st = expression[i];
 
-        exp.addAll({key: replacement.replaceAll("@", "")});
-        newExpression = newExpression.replaceAll(replacement, "$key@");
-
-        specialCounter = 0;
-        replacement = "";
-      }
-
-      if (specialCounter == 1) {
-        replacement += st;
-      }
       if (st == subChar) {
-        specialCounter++;
-        continue;
+        if (insideAtBlock) {
+          String key = random.nextIntOfDigits(5).toString();
+          exp[key] = replacement;
+
+          newExpression =
+              newExpression.replaceFirst("@$replacement@", "@$key@");
+
+          insideAtBlock = false;
+          replacement = "";
+        } else {
+          insideAtBlock = true;
+        }
+      } else if (insideAtBlock) {
+        replacement += st;
       }
     }
     String eq =
@@ -392,7 +393,7 @@ class ConditionEquation {
                 ? false
                 : answerMap![split[0]] is List;
             if (!isList) {
-              String? val = answerMap?[split[0]];
+              String? val = answerMap?[split[0]]?.toString();
               if (val == null) return false;
               matchValue = val;
             } else {
@@ -426,7 +427,7 @@ class ConditionEquation {
           v = "-1";
         }
 
-        if (answerMap![split[0]] is List) {
+        if (answerMap != null && answerMap![split[0]] is List) {
           return answerMap![split[0]].contains(split[1]);
         }
 
