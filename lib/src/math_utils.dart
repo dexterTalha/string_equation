@@ -44,9 +44,7 @@ class MathUtils {
   /// \param ansObject A map containing variable values.
   /// \param parentId An optional parent ID for context.
   /// \return The result of the evaluated expression.
-  double putValueAndSolveExpression(
-      String formula, Map<String, dynamic>? ansObject,
-      {String? parentId}) {
+  double putValueAndSolveExpression(String formula, Map<String, dynamic>? ansObject, {String? parentId}) {
     formulae = formula;
 
     if (ansObject == null) {
@@ -54,10 +52,7 @@ class MathUtils {
     }
 
     try {
-      var iter = formula
-          .replaceAll("(", "")
-          .replaceAll(")", "")
-          .split(RegExp(r'[+\-*/^]'));
+      var iter = formula.replaceAll("(", "").replaceAll(")", "").split(RegExp(r'[+\-*/^]'));
 
       for (var key in iter) {
         double? val = double.tryParse(key.toString());
@@ -68,11 +63,8 @@ class MathUtils {
         if (parentId != null) {
           shortKey = "$parentId.$shortKey";
         }
-        var value = (ansObject[shortKey]?.toString().isEmpty ?? true)
-            ? '0'
-            : ansObject[shortKey];
-        formulae = formulae.replaceAll(
-            "\\b${key.trim()}\\b".toRegex, value.toString());
+        var value = (ansObject[shortKey]?.toString().isEmpty ?? true) ? '0' : ansObject[shortKey];
+        formulae = formulae.replaceAll("\\b${key.trim()}\\b".toRegex, value.toString());
       }
     } catch (e) {
       return 0.0;
@@ -147,11 +139,9 @@ class MathUtils {
       // parentheses
       x = parseExpression();
       eat(endCode);
-    } else if (ch >= '0'.codeUnitAt(0) && ch <= '9'.codeUnitAt(0) ||
-        ch == dotCode) {
+    } else if (ch >= '0'.codeUnitAt(0) && ch <= '9'.codeUnitAt(0) || ch == dotCode) {
       // numbers
-      while (
-          ch >= '0'.codeUnitAt(0) && ch <= '9'.codeUnitAt(0) || ch == dotCode) {
+      while (ch >= '0'.codeUnitAt(0) && ch <= '9'.codeUnitAt(0) || ch == dotCode) {
         ch = nextChar();
       }
       x = double.parse(formulae.substring(startPos, pos));
@@ -176,8 +166,9 @@ class MathUtils {
     } else {
       throw Exception("Unexpected: $ch");
     }
-    if (eat('^'.codeUnitAt(0)))
+    if (eat('^'.codeUnitAt(0))) {
       x = pow(x, parseFactor()).toDouble(); // exponentiation
+    }
     return x;
   }
 
