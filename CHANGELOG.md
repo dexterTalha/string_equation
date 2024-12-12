@@ -14,3 +14,13 @@
 - Documentation updates
 - Formatting updates
 - Updated dart version support
+
+## 1.0.3
+
+- Dart formatting
+
+## 1.0.4
+
+- Fix in regex equations solving
+- Null issue fixed when passing null answer to answer map
+- Added test cases for complex regex equations
