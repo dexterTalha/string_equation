@@ -16,7 +16,7 @@
 - Updated dart version support
 
 ## 1.0.3
-
+- Static analysis pass
 - Dart formatting
 
 ## 1.0.4
