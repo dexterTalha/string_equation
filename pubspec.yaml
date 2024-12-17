@@ -1,5 +1,5 @@
 name: string_equation
-description: String Equation is a powerful Dart package that allows you to dynamically evaluate both logical and mathematical expressions from a string format.q
+description: String Equation is a powerful Dart package that allows you to dynamically evaluate both logical and mathematical expressions from a string format.
 version: 1.0.5
 repository: https://github.com/dexterTalha/string_equation.git
 
