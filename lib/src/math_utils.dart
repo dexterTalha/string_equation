@@ -54,7 +54,6 @@ class MathUtils {
       String formula, Map<String, dynamic>? ansObject,
       {String? parentId}) {
     formulae = formula;
-
     DateTime todayDate = DateTime.now();
     formulae = formulae.replaceAll(
         "\$today", todayDate.millisecondsSinceEpoch.toString());
