@@ -1,9 +1,16 @@
+import 'package:intl/intl.dart';
 import 'package:vector_math/vector_math.dart';
 import 'condition_equation.dart';
 import 'dart:math';
 
 /// A utility class for mathematical operations and expression evaluation.
 class MathUtils {
+  /// Indicates whether the formula is a date formula.
+  bool isDateFormula = false;
+
+  /// Constructs a new instance of the [MathUtils] class.
+  MathUtils([this.isDateFormula = false]);
+
   /// The current character being processed in the formula.
   int ch = 0;
 
@@ -34,9 +41,8 @@ class MathUtils {
   /// The Unicode code unit for the dot character.
   final int dotCode = '.'.codeUnitAt(0);
 
-  /// Indicates whether the formula is a date formula.
-  /// COMING SOON: This feature is not yet implemented.
-  bool isDateFormula = false;
+  ///Format of the date will be in "dd-MM-yyyy"
+  final String format = "dd-MM-yyyy";
 
   /// Replaces variables in the formula with their values from the answer map and evaluates the expression.
   ///
@@ -44,27 +50,63 @@ class MathUtils {
   /// \param ansObject A map containing variable values.
   /// \param parentId An optional parent ID for context.
   /// \return The result of the evaluated expression.
-  double putValueAndSolveExpression(String formula, Map<String, dynamic>? ansObject, {String? parentId}) {
+  double putValueAndSolveExpression(
+      String formula, Map<String, dynamic>? ansObject,
+      {String? parentId}) {
     formulae = formula;
-
+    DateTime todayDate = DateTime.now();
+    formulae = formulae.replaceAll(
+        "\$today", todayDate.millisecondsSinceEpoch.toString());
     if (ansObject == null) {
       return eval(formulae);
     }
 
     try {
-      var iter = formula.replaceAll("(", "").replaceAll(")", "").split(RegExp(r'[+\-*/^]'));
-
+      var iter = formula
+          .replaceAll("(", "")
+          .replaceAll(")", "")
+          .split(RegExp(r'[+\-*/^]'))
+          .map((e) =>
+              e.replaceAll("\$today", DateFormat(format).format(todayDate)))
+          .toList();
+      isDateFormula = isDateFormula ||
+          iter.any((element) {
+            String shortKey = element.trim().toString();
+            if (parentId != null) {
+              shortKey = "$parentId.$shortKey";
+            }
+            var value = (ansObject[shortKey]?.toString().isEmpty ?? true)
+                ? '0'
+                : ansObject[shortKey];
+            return value.toString().containsDateOrToday();
+          });
       for (var key in iter) {
-        double? val = double.tryParse(key.toString());
+        double? val;
+        if (!isDateFormula) {
+          val = double.tryParse(key.toString());
+        }
         if (val != null) {
           continue;
         }
+
         String shortKey = key.trim().toString();
         if (parentId != null) {
           shortKey = "$parentId.$shortKey";
         }
-        var value = (ansObject[shortKey]?.toString().isEmpty ?? true) ? '0' : ansObject[shortKey];
-        formulae = formulae.replaceAll("\\b${key.trim()}\\b".toRegex, value.toString());
+        var value = (ansObject[shortKey]?.toString().isEmpty ?? true)
+            ? '0'
+            : ansObject[shortKey];
+        isDateFormula = isDateFormula || value.toString().containsDateOrToday();
+        if (isDateFormula) {
+          try {
+            value = getDateInMilliSeconds(value);
+          } catch (e) {
+            value = (double.tryParse(shortKey) ?? 0) * 24 * 60 * 60 * 1000;
+          }
+        }
+
+        formulae = formulae.replaceAll(
+            "\\b${key.trim()}\\b".toRegex, value.toString());
       }
     } catch (e) {
       return 0.0;
@@ -72,9 +114,26 @@ class MathUtils {
     double result = eval(formulae);
     if (isDateFormula) {
       result = result / (1000 * 60 * 60 * 24);
-      result = result < 0 ? 0 : result;
+      result = result < 0 ? 0 : result.round().toDouble();
     }
     return result;
+  }
+
+  /// Converts a date string to milliseconds since epoch.
+  ///
+  /// The function supports two date formats: DD-MM-YYYY and MM-YYYY. If the date string contains only
+  /// month and year, it defaults to the format MM-YYYY.
+  ///
+  /// - Parameter date: The date string to convert.
+  /// - Returns: The number of milliseconds since epoch for the given date.
+  /// - Throws: A `FormatException` if the date string does not match the expected format.
+  int getDateInMilliSeconds(String date) {
+    String format = "dd-MM-yyyy";
+    if (date.split("-").length == 2) {
+      format = "MM-yyyy";
+    }
+    DateTime myDate = DateFormat(format).parse(date);
+    return myDate.millisecondsSinceEpoch;
   }
 
   /// Evaluates the given mathematical expression.
@@ -139,9 +198,11 @@ class MathUtils {
       // parentheses
       x = parseExpression();
       eat(endCode);
-    } else if (ch >= '0'.codeUnitAt(0) && ch <= '9'.codeUnitAt(0) || ch == dotCode) {
+    } else if (ch >= '0'.codeUnitAt(0) && ch <= '9'.codeUnitAt(0) ||
+        ch == dotCode) {
       // numbers
-      while (ch >= '0'.codeUnitAt(0) && ch <= '9'.codeUnitAt(0) || ch == dotCode) {
+      while (
+          ch >= '0'.codeUnitAt(0) && ch <= '9'.codeUnitAt(0) || ch == dotCode) {
         ch = nextChar();
       }
       x = double.parse(formulae.substring(startPos, pos));
