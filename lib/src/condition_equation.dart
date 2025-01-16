@@ -205,6 +205,14 @@ class ConditionEquation {
     return isGlobalHavingNot ? !result : result;
   }
 
+  /// Check for the exact match for the AND and OR ('O' and 'A') operators.
+  /// \param expression The expression to be checked.
+  /// \return True if the expression contains only one operator, false otherwise.
+  bool checkForAndOr(String value) {
+    return RegExp("\\b$OR\\b").hasMatch(value) ||
+        RegExp("\\b$AND\\b").hasMatch(value);
+  }
+
   /// Solves a given logical expression by breaking it down into smaller sub-expressions and evaluating them.
   ///
   /// This function handles logical operators such as AND and OR, and recursively solves sub-expressions.
@@ -233,7 +241,7 @@ class ConditionEquation {
           equations.trim().removeSurrounding(START.toString(), END.toString());
     }
 
-    if (equations.contains(AND) || equations.contains(OR)) {
+    if (checkForAndOr(expression)) {
       Map splitEq = splitEquation(equations);
       var hashMap = splitEq['map'];
 
@@ -495,9 +503,10 @@ extension GetValue on String {
   /// \return A list of evaluated double values or null if the evaluation fails.
   List<double?>? getValues(String conditions, Map<String, dynamic>? answer,
       {String? parentId}) {
+    bool isDateFormula = conditions.containsDateOrToday();
     var map = conditions
         .split(this)
-        .map((e) => MathUtils()
+        .map((e) => MathUtils(isDateFormula)
             .putValueAndSolveExpression(e, answer, parentId: parentId)
             .toString())
         .map((e) => double.parse(e));
@@ -576,6 +585,18 @@ extension RemoveSurrounding on String {
       return substring(prefix.length, length - suffix.length);
     }
     return this;
+  }
+
+  /// Checks if the given string contains the keyword '$today' or a date in the format DD-MM-YYYY.
+  ///
+  /// The function uses a regular expression to match dates in the format DD-MM-YYYY.
+  ///
+  /// - Parameter value: The string to check for the presence of a date or '$today'.
+  /// - Returns: `true` if the string contains '$today' or a date in the format DD-MM-YYYY, otherwise `false`.
+  bool containsDateOrToday() {
+    final dateRegex =
+        RegExp(r'\b\d{2}-\d{2}-\d{4}\b'); // Matches DD-MM-YYYY format
+    return contains('\$today') || dateRegex.hasMatch(this);
   }
 }
 

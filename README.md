@@ -1,8 +1,8 @@
-# ConditionEquation
+# String Equation
 
 ## Description
 
-ConditionEquation is a powerful Dart package that allows you to dynamically evaluate both logical and mathematical expressions from a string format. It offers robust support for variables, making it highly useful in scenarios where you need to parse, interpret, and compute expressions programmatically. Whether you're working on rule engines, dynamic forms, or data validation, ConditionEquation simplifies the process of handling complex expressions in your Dart applications.
+String Equation is a powerful Dart package that allows you to dynamically evaluate both logical and mathematical expressions from a string format. It offers robust support for variables, making it highly useful in scenarios where you need to parse, interpret, and compute expressions programmatically. Whether you're working on rule engines, dynamic forms, or data validation, String Equation simplifies the process of handling complex expressions in your Dart applications.
 
 ## Features
 
@@ -10,6 +10,7 @@ ConditionEquation is a powerful Dart package that allows you to dynamically eval
 - Support for comparison operators like `<`, `>`, `<=`, `>=`, `==`, `!=`.
 - Evaluate mathematical expressions with standard arithmetic operations.
 - Support for variables within expressions.
+- Support for date type formula to add or compare date values
 
 ## Installation
 
@@ -17,7 +18,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  string_equation: ^1.0.4
+  string_equation: ^1.0.5
 ```
 Then, run:
 
@@ -73,7 +74,7 @@ If you'd like to contribute to the package, please feel free to open a pull requ
 ## License
 Modified BSD License
 
-Copyright (c) 2024 Mohd Talha
+Copyright (c) 2024 Mohd Talha & Sahjad Ansari
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
